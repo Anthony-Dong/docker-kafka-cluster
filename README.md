@@ -1,5 +1,6 @@
 ## Kafka 的本地Docker集群
 
+### 项目目录
 ```shell
 ➜  docker git:(master) ✗ tree -L 1
 ➜  kafka git:(master) ✗ tree -L 2
@@ -110,3 +111,9 @@ Recreating kafka_kafka-03_1     ... done
 Recreating kafka_zookeeper-01_1 ... done
 Recreating kafka_kafka-02_1     ... done
 ```
+
+### 客户端连接信息
+1、容器内部broker节点：`kafka-01:9092,kafka-02:9092,kafka-03:9092` ，相当于内网IP
+2、容器外部broker节点：`localhost:9091,localhost:9092,localhost:9093` 相当于公网IP
+3、容器内部Zk节点：`zookeeper-01:2181`
+4、容器外部Zk节点：`localhost:2181`
