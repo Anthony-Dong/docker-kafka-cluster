@@ -1,0 +1,14 @@
+/kafka-01/kafka-logs
+/kafka-01/log
+
+/kafka-02/kafka-logs
+/kafka-02/log
+
+
+/kafka-03/kafka-logs
+/kafka-03/log
+
+/zookeeper-01/data
+
+
+/.idea

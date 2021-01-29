@@ -1,0 +1,33 @@
+version: "3"
+services:
+  zookeeper-01:
+    image: zookeeper:3.4.10
+    volumes:
+      - ./zookeeper-01/conf:/opt/zookeeper/conf
+      - ./zookeeper-01/data:/tmp/zookeeper
+    ports:
+      - 2181:2181
+  kafka-01:
+    image: kafka:2.1.1
+    volumes:
+      - ./kafka-01/config:/opt/kafka/config
+      - ./kafka-01/kafka-logs:/tmp/kafka-logs
+      - ./kafka-01/log:/opt/kafka/log
+    ports: 
+      - 9091:9092
+  kafka-02:
+    image: kafka:2.1.1
+    volumes:
+      - ./kafka-02/config:/opt/kafka/config
+      - ./kafka-02/kafka-logs:/tmp/kafka-logs
+      - ./kafka-02/log:/opt/kafka/log
+    ports: 
+      - 9092:9092
+  kafka-03:
+    image: kafka:2.1.1
+    volumes:
+      - ./kafka-03/config:/opt/kafka/config
+      - ./kafka-03/kafka-logs:/tmp/kafka-logs
+      - ./kafka-03/log:/opt/kafka/log
+    ports: 
+      - 9093:9092         
