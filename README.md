@@ -1,4 +1,8 @@
 ## Kafka 的本地Docker集群
+### 版本
+kafka 2.1.1
+
+zookeeper 3.4.0
 
 ### 项目目录
 ```shell
