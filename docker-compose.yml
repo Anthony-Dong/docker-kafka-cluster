@@ -12,7 +12,7 @@ services:
     volumes:
       - ./kafka-01/config:/opt/kafka/config
       - ./kafka-01/kafka-logs:/tmp/kafka-logs
-      - ./kafka-01/log:/opt/kafka/log
+      - ./kafka-01/logs:/opt/kafka/logs
     ports: 
       - 9091:9092
   kafka-02:
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./kafka-02/config:/opt/kafka/config
       - ./kafka-02/kafka-logs:/tmp/kafka-logs
-      - ./kafka-02/log:/opt/kafka/log
+      - ./kafka-02/logs:/opt/kafka/logs
     ports: 
       - 9092:9092
   kafka-03:
@@ -28,6 +28,6 @@ services:
     volumes:
       - ./kafka-03/config:/opt/kafka/config
       - ./kafka-03/kafka-logs:/tmp/kafka-logs
-      - ./kafka-03/log:/opt/kafka/log
+      - ./kafka-03/logs:/opt/kafka/logs
     ports: 
       - 9093:9092         
