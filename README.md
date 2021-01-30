@@ -1,8 +1,9 @@
 ## Kafka 的本地Docker集群
 ### 版本
-kafka 2.1.1
+-  kafka:2.1.1
+- zookeeper:3.4.0
 
-zookeeper 3.4.0
+>   不使用 docker-compose 来build Dockerfile的原因是无法复用一个image，导致镜像过多，所以需要构建本地镜像，然后再启动docker-compose，由于docker-compose本地环境无法限制内存，可以参考[官方文档](https://docs.docker.com/compose/compose-file/compose-file-v3/#resources)，需要启动添加`--compatibility` 参数
 
 ### 项目目录
 ```shell
@@ -33,7 +34,7 @@ zookeeper 3.4.0
     └── data
 ```
 ### 构建基础镜像
-进入docker目录执行
+1、进入docker目录执行
 ```shell
 ➜  docker git:(master) ✗ make
 docker build -t kafka:2.1.1 ./kafka
@@ -93,7 +94,7 @@ Successfully tagged zookeeper:3.4.10
 ```
 
 
-### 运行kafka3节点集群
+### 运行kafka集群
 1、记得网卡IP的IP需要修改一下，比如`kafka-02/config/server.properties`文件，修改`advertised.listeners=PLAINTEXT://172.15.64.10:9092`,我的本地网卡的IP是`172.15.64.10`，暴露的这台机器地址的IP是9092,切记其他节点不一定是这个。
 具体原因是：
 ```shell
