@@ -7,6 +7,7 @@
 
 - 3zk集群+3kafka集群（zk集群依赖于myid文件，所以依赖volume形式捆绑）
 - 内存限制，zk 256M, kafka 512M， 由于swap的内存，都会*2。
+- kafka-manager 监控
 
 ### 项目目录
 ```shell
@@ -162,3 +163,5 @@ Mode: leade
 3、容器内部Zk节点集群：`zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181`
 
 4、容器外部Zk节点集群：`localhost:2181,localhost:2182,localhost:2183`
+
+5、kafka-manager本地访问： `localhost:9090`

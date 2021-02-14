@@ -10,5 +10,6 @@ RUN wget http://archive.apache.org/dist/kafka/2.1.1/kafka_2.11-2.1.1.tgz &&\
 
 ENV PATH=${PATH}:/opt/kafka/bin
 WORKDIR /opt/kafka
-EXPOSE 9092 9999
-CMD ["/bin/bash","-c","JMX_PORT=9999 kafka-server-start.sh config/server.properties"]
+ENV JMX_PORT=9999
+EXPOSE 9092 ${JMX_PORT}
+CMD ["/bin/bash","-c","JMX_PORT=${JMX_PORT} kafka-server-start.sh config/server.properties"]
