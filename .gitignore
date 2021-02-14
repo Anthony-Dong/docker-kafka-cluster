@@ -1,17 +1,5 @@
-/kafka-01/kafka-logs
-/kafka-01/logs
-
-/kafka-02/kafka-logs
-/kafka-02/logs
-
-
-/kafka-03/kafka-logs
-/kafka-03/logs
-
-/zookeeper/data
-/zookeeper-01/data/version-2
-/zookeeper-02/data/version-2
-/zookeeper-03/data/version-2
-
+/kafka-01/data
+/kafka-02/data
+/kafka-03/data
 
 /.idea

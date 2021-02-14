@@ -1,11 +1,11 @@
 ## Kafka&&zookeeper 的本地Docker集群
 ### 版本
--  kafka:2.1.1
-- zookeeper:3.4.0
+-  kafka:2.1.1（官方的镜像比较不好用，也可以推荐使用，由于kafka配置太多，使用环境变量会发现很多问题）
+- zookeeper:3.4.0 (使用的是官方的镜像：[https://hub.docker.com/_/zookeeper](https://hub.docker.com/_/zookeeper)) ，本地也有zk的镜像
 
 >   不使用 docker-compose 来build Dockerfile的原因是无法复用一个image，导致镜像过多，所以需要构建本地镜像，然后再启动docker-compose，由于docker-compose本地环境无法限制内存，可以参考[官方文档](https://docs.docker.com/compose/compose-file/compose-file-v3/#resources)，需要启动添加`--compatibility` 参数
 
-- 3zk集群+3kafka集群（zk集群依赖于myid文件，所以依赖volume形式捆绑）
+- 3zk集群+3kafka集群
 - 内存限制，zk 256M, kafka 512M， 由于swap的内存，都会*2。
 - kafka-manager 监控
 
@@ -101,15 +101,16 @@ Successfully tagged zookeeper:3.4.10
 
 
 ### 运行kafka集群
-1、记得网卡IP的IP需要修改一下，比如`kafka-02/config/server.properties`文件，修改`advertised.listeners=PLAINTEXT://172.15.64.10:9092`,我的本地网卡的IP是`172.15.64.10`，暴露的这台机器地址的IP是9092,切记其他节点不一定是这个。
+1、记得网卡IP的IP需要修改一下，比如`kafka-01/config/server.properties`文件，修改`advertised.listeners=INSIDE://:9092,OUTSIDE://192.168.1.115:9191`,我的本地网卡的IP是`192.168.1.115`，暴露的这台机器地址的IP是9191,切记其他节点不一定是这个。kafka对于外网的支持比较友好，会在本地监听一个端口专门提供外网的请求，所以还是对于这块支持的友好程度，其实对于rocket-mq也有这样的支持，但是并不友好。
 具体原因是：
 
 ```shell
-[zk: localhost:2181(CONNECTED) 13] get /brokers/ids/1
-{"listener_security_protocol_map":{"PLAINTEXT":"PLAINTEXT"},"endpoints":["PLAINTEXT://172.15.64.10:9091"],"jmx_port":-1,"host":"172.15.64.10","timestamp":"1611906107097","port":9091,"version":4}
+[zk: localhost:2181(CONNECTED) 2] get /brokers/ids/1
+{"listener_security_protocol_map":{"INSIDE":"PLAINTEXT","OUTSIDE":"PLAINTEXT"},"endpoints":["INSIDE://10a01123f46b:9092","OUTSIDE://192.168.1.115:9191"],"jmx_port":9291,"host":"10a01123f46b","timestamp":"1613309862209","port":9092,"version":4}
 ```
 
 2、运行kakfa集群
+
 ```shell
 ➜  kafka-cluster git:(master) ✗ make 
 docker-compose --compatibility stop
@@ -160,14 +161,19 @@ Mode: leader
 
 ![image-20210214123422833](https://tyut.oss-accelerate.aliyuncs.com/image/2021/2-14/ec95395699a040029b996da5a443a5d4.png)
 
+查看broker信息
+
+![image-20210214214717010](https://tyut.oss-accelerate.aliyuncs.com/image/2021/2-14/435ac45d594d4c17abd39857c2f77a49.png)
+
 ### 客户端连接信息
 
 1、容器内部broker节点：`kafka-01:9092,kafka-02:9092,kafka-03:9092` ，相当于内网IP
 
-2、容器外部broker节点：`localhost:9091,localhost:9092,localhost:9093` 相当于公网IP
+2、容器外部broker节点：`localhost:9191,localhost:9192,localhost:9193` 相当于公网IP
 
 3、容器内部Zk节点集群：`zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181`
 
 4、容器外部Zk节点集群：`localhost:2181,localhost:2182,localhost:2183`
 
 5、kafka-manager本地访问： `localhost:9090`
+

@@ -6,9 +6,9 @@ services:
       resources:
         limits:
           memory: 256M
-    volumes:
-      - ./zookeeper-01/conf:/opt/zookeeper/conf
-      - ./zookeeper-01/data:/opt/zookeeper/data
+    environment: 
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zookeeper-01:2281:2381 server.2=zookeeper-02:2281:2381 server.3=zookeeper-03:2281:2381
     ports:
       - 2181:2181
   zookeeper-02:
@@ -17,9 +17,9 @@ services:
       resources:
         limits:
           memory: 256M
-    volumes:
-      - ./zookeeper-02/conf:/opt/zookeeper/conf
-      - ./zookeeper-02/data:/opt/zookeeper/data
+    environment: 
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zookeeper-01:2281:2381 server.2=zookeeper-02:2281:2381 server.3=zookeeper-03:2281:2381
     ports:
       - 2182:2181
   zookeeper-03:
@@ -28,74 +28,59 @@ services:
       resources:
         limits:
           memory: 256M
-    volumes:
-      - ./zookeeper-03/conf:/opt/zookeeper/conf
-      - ./zookeeper-03/data:/opt/zookeeper/data
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zookeeper-01:2281:2381 server.2=zookeeper-02:2281:2381 server.3=zookeeper-03:2281:2381
     ports:
-      - 2183:2181
-  zookeeper:
-    image: zookeeper:3.4.10
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-    volumes:
-      - ./zookeeper/conf:/opt/zookeeper/conf
-      - ./zookeeper/data:/opt/zookeeper/data
-    ports:
-      - 2182:2181
+      - 2183:2181      
   kafka-01:
-    image: kafka:2.1.1
+    image: fanhaodong/kafka:2.1.1
     deploy:
       resources:
         limits:
           memory: 512M
-    volumes:
-      - ./kafka-01/config:/opt/kafka/config
-      - ./kafka-01/kafka-logs:/tmp/kafka-logs
-      - ./kafka-01/logs:/opt/kafka/logs
     environment:
-      - JMX_PORT=9991
-    ports: 
-      - 9091:9092
-      - 9991:9991  
+      JMX_PORT: 9291
+    ports:
+      - 9191:9191
+      - 9291:9291
+    volumes: 
+      - ./kafka-01/config:/opt/kafka/config
+      - ./kafka-01/data:/tmp/kafka-logs
   kafka-02:
-    image: kafka:2.1.1
+    image: fanhaodong/kafka:2.1.1
     deploy:
       resources:
         limits:
-          memory: 512M    
+          memory: 512M
+    environment:
+      JMX_PORT: 9292
+    ports:
+      - 9192:9192
+      - 9292:9292
     volumes:
       - ./kafka-02/config:/opt/kafka/config
-      - ./kafka-02/kafka-logs:/tmp/kafka-logs
-      - ./kafka-02/logs:/opt/kafka/logs
-    environment:
-      - JMX_PORT=9992     
-    ports: 
-      - 9092:9092
-      - 9992:9992      
+      - ./kafka-02/data:/tmp/kafka-logs
   kafka-03:
-    image: kafka:2.1.1
+    image: fanhaodong/kafka:2.1.1
     deploy:
       resources:
         limits:
-          memory: 512M    
+          memory: 512M
+    environment:
+      JMX_PORT: 9293
+    ports:
+      - 9193:9193
+      - 9293:9293
     volumes:
       - ./kafka-03/config:/opt/kafka/config
-      - ./kafka-03/kafka-logs:/tmp/kafka-logs
-      - ./kafka-03/logs:/opt/kafka/logs
-    environment:
-      - JMX_PORT=9993
-    ports: 
-      - 9093:9092
-      - 9993:9993
+      - ./kafka-03/data:/tmp/kafka-logs
   kafka-manager:
     image: hlebalbau/kafka-manager:2.0.0.2
     ports:
       - 9000:9000
     environment:
-      - ZK_HOSTS=zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181
-      - KAFKA_MANAGER_AUTH_ENABLED=true
-      - KAFKA_MANAGER_USERNAME=admin
-      - KAFKA_MANAGER_PASSWORD=admin
-      - APPLICATION_SECRET=random-secret
+      ZK_HOSTS: zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181
+      KAFKA_MANAGER_AUTH_ENABLED: "true"
+      KAFKA_MANAGER_USERNAME: admin
+      KAFKA_MANAGER_PASSWORD: admin
