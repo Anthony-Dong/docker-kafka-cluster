@@ -3,6 +3,8 @@ image:
 	make -C docker
 run:
 	docker-compose --compatibility up -d
+zookeeper: stop
+	docker-compose --compatibility up -d zookeeper-01 zookeeper-02 zookeeper-03
 stop:
 	docker-compose --compatibility stop
 delete:
