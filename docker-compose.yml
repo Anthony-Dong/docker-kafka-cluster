@@ -2,13 +2,43 @@ version: "3"
 services:
   zookeeper-01:
     image: zookeeper:3.4.10
+    deploy:
+      resources:
+        limits:
+          memory: 256M
     volumes:
       - ./zookeeper-01/conf:/opt/zookeeper/conf
-      - ./zookeeper-01/data:/tmp/zookeeper
-    ports:
-      - 2181:2181
+      - ./zookeeper-01/data:/opt/zookeeper/data
+    # ports:
+      # - 2181:2181
+  zookeeper-02:
+    image: zookeeper:3.4.10
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    volumes:
+      - ./zookeeper-02/conf:/opt/zookeeper/conf
+      - ./zookeeper-02/data:/opt/zookeeper/data
+    # ports:
+      # - 2182:2181
+  zookeeper-03:
+    image: zookeeper:3.4.10
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    volumes:
+      - ./zookeeper-03/conf:/opt/zookeeper/conf
+      - ./zookeeper-03/data:/opt/zookeeper/data
+    # ports:
+      # - 2182:2181           
   kafka-01:
     image: kafka:2.1.1
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     volumes:
       - ./kafka-01/config:/opt/kafka/config
       - ./kafka-01/kafka-logs:/tmp/kafka-logs
@@ -17,6 +47,10 @@ services:
       - 9091:9092
   kafka-02:
     image: kafka:2.1.1
+    deploy:
+      resources:
+        limits:
+          memory: 512M    
     volumes:
       - ./kafka-02/config:/opt/kafka/config
       - ./kafka-02/kafka-logs:/tmp/kafka-logs
@@ -25,6 +59,10 @@ services:
       - 9092:9092
   kafka-03:
     image: kafka:2.1.1
+    deploy:
+      resources:
+        limits:
+          memory: 512M    
     volumes:
       - ./kafka-03/config:/opt/kafka/config
       - ./kafka-03/kafka-logs:/tmp/kafka-logs
