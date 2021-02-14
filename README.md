@@ -138,21 +138,27 @@ Creating kafka-cluster_zookeeper-02_1 ... done
  查看集群信息,可以看到` myid`大的被选举为leader
 
 ```shell
-➜  ~ docker exec -it kafka-cluster_zookeeper-01_1 zkServer.sh status
+➜  ~ docker exec -it kafka-cluster_zookeeper-01_1  zkServer.sh status
 ZooKeeper JMX enabled by default
 Using config: /opt/zookeeper/bin/../conf/zoo.cfg
 Mode: follower
-➜  ~ docker exec -it kafka-cluster_zookeeper-02_1 zkServer.sh status
+➜  ~ docker exec -it kafka-cluster_zookeeper-02_1  zkServer.sh status
 ZooKeeper JMX enabled by default
 Using config: /opt/zookeeper/bin/../conf/zoo.cfg
 Mode: follower
-➜  ~ docker exec -it kafka-cluster_zookeeper-03_1 zkServer.sh status
+➜  ~ docker exec -it kafka-cluster_zookeeper-03_1  zkServer.sh status
 ZooKeeper JMX enabled by default
 Using config: /opt/zookeeper/bin/../conf/zoo.cfg
-Mode: leade
+Mode: leader
 ```
 
+4、添加kafka-manager的cluster
 
+![image-20210214123011369](https://tyut.oss-accelerate.aliyuncs.com/image/2021/2-14/7fc562c6767d4f10b531d830160e3258.png)
+
+查看信息
+
+![image-20210214123422833](https://tyut.oss-accelerate.aliyuncs.com/image/2021/2-14/ec95395699a040029b996da5a443a5d4.png)
 
 ### 客户端连接信息
 

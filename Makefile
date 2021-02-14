@@ -1,7 +1,7 @@
 all:stop run
 
-ZK := zookeeper
-# ZK := zookeeper-01 zookeeper-02 zookeeper-03
+# ZK := zookeeper
+ZK := zookeeper-01 zookeeper-02 zookeeper-03
 Kafka := kafka-01 kafka-02 kafka-03 kafka-manager
 
 image:

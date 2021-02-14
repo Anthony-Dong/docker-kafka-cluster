@@ -9,8 +9,8 @@ services:
     volumes:
       - ./zookeeper-01/conf:/opt/zookeeper/conf
       - ./zookeeper-01/data:/opt/zookeeper/data
-    # ports:
-      # - 2181:2181
+    ports:
+      - 2181:2181
   zookeeper-02:
     image: zookeeper:3.4.10
     deploy:
@@ -20,8 +20,8 @@ services:
     volumes:
       - ./zookeeper-02/conf:/opt/zookeeper/conf
       - ./zookeeper-02/data:/opt/zookeeper/data
-    # ports:
-      # - 2182:2181
+    ports:
+      - 2182:2181
   zookeeper-03:
     image: zookeeper:3.4.10
     deploy:
@@ -31,8 +31,8 @@ services:
     volumes:
       - ./zookeeper-03/conf:/opt/zookeeper/conf
       - ./zookeeper-03/data:/opt/zookeeper/data
-    # ports:
-      # - 2182:2181 
+    ports:
+      - 2183:2181
   zookeeper:
     image: zookeeper:3.4.10
     deploy:
@@ -94,7 +94,8 @@ services:
     ports:
       - 9000:9000
     environment:
-      - ZK_HOSTS=zookeeper:2181
+      - ZK_HOSTS=zookeeper-01:2181,zookeeper-02:2181,zookeeper-03:2181
       - KAFKA_MANAGER_AUTH_ENABLED=true
       - KAFKA_MANAGER_USERNAME=admin
       - KAFKA_MANAGER_PASSWORD=admin
+      - APPLICATION_SECRET=random-secret
